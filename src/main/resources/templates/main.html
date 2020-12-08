@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/amazeui/assets/css/amazeui.css}">
+    <script th:src="@{/amazeui/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/amazeui/assets/js/amazeui.js}"></script>
+    <script th:src="@{/amazeui/pagination/amazeui-pagination.js}"></script>
+    <script th:src="@{/assets/js/amazeui.min.js}"></script>
+    <script th:src="@{/assets/js/app.js}"></script>
+
+    <style type="text/css">
+        .admin-sidebar-list li a,.admin-offcanvas-bar,.admin-sidebar-list li{background: #2b303e;color: #989dac;}
+
+        .admin-sidebar-list li{color: #777;}
+
+        .am-list li,li.admin-parent{border: 0px ;}
+        li.ali-active a,.admin-sidebar-sub>li>a:hover{background: #3b3f4d;color: #FFFFFF;border-left:5px solid #5c9df5;}
+
+        div.admin-offcanvas-bar{padding-left: 0px;}
+        span.am-badge{margin-left: 20px;}
+        .am-panel ul{background: #2b303e;}
+        .admin-sidebar-list li a { padding-left: 5px;}
+        .admin-sidebar { overflow-y: hidden; overflow-x: hidden;width: 200px; }
+        iframe{margin-right: 100px;}
+    </style>
+</head>
+<body >
+
+<header class="am-topbar am-topbar-inverse admin-header">
+    <div class="am-topbar-brand">
+        <strong>YUN</strong> <small>租房后台管理</small>
+    </div>
+
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}">
+        <span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+    <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+        <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list" >
+            <li><a href="javascript:;"><span class="am-icon-envelope-o"></span> 收件箱 <span class="am-badge am-badge-warning">5</span></a></li>
+            <li class="am-dropdown" data-am-dropdown>
+                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                    <span class="am-icon-users"></span> 管理员 <span class="am-icon-caret-down"></span>
+                </a>
+                <ul class="am-dropdown-content">
+                    <li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
+                    <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
+                    <li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
+                </ul>
+            </li>
+            <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
+        </ul>
+    </div>
+</header>
+<div class="am-cf admin-main">
+    <a href="#doc-oc-demo1" data-am-offcanvas style="margin: 20px" >查看菜单</a>
+
+    <!-- 侧边栏内容 -->
+    <div id="doc-oc-demo1" class="am-offcanvas"  >
+        <div class="am-offcanvas-bar" style="margin-top: 52px">
+            <div class="am-offcanvas-content" >
+                <ul class="am-list admin-sidebar-list" >
+                    <li class="am-panel">
+                        <ul class="am-list am-collapse admin-sidebar-sub am-in">
+                            <li><a  href="javascript:void(0)" onclick="show_user()"><i class="am-icon-user am-margin-left-sm"></i> 人员列表 </a></li>
+                        </ul>
+                        <ul class="am-list am-collapse admin-sidebar-sub am-in" >
+                            <li><a  href="javascript:void(0)" onclick="show_home()"><i class="am-icon-user am-margin-left-sm"></i> 房屋列表 </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+ <div id="main">
+
+ </div>
+</div>
+<!-- 链接触发器， href 属性为目标元素 ID -->
+
+<script type="text/javascript">
+    $('#doc-oc-demo1').offCanvas({effect: 'overlay'});
+   /* // $('#doc-oc-demo1').location.reload();*/
+
+  function show_user() {
+      $('#main').load("/user/select");
+
+     /* setInterval(function () {
+          $("#doc-oc-demo1").load(location.href + " #doc-oc-demo1");//注意后面DIV的ID前面的空格，很重要！没有空格的话，会出双眼皮！（也可以使用类名）
+      }, 1000);//8秒自动刷新*/
+  }
+function show_home(){
+      $('#main').load("/house/selectHome");
+}
+</script>
+</body>
+</html>

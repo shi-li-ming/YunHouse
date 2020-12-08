@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>房屋信息</title>
+    <link rel="stylesheet" th:href="@{/amazeui/assets/css/amazeui.css}">
+    <script th:src="@{/amazeui/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/amazeui/assets/js/amazeui.js}"></script>
+    <script th:src="@{/amazeui/pagination/amazeui-pagination.js}"></script>
+</head>
+<body>
+<div class="am-g">
+    <div class="am-u-lg-10 am-u-lg-centered">
+        <!--后退+刷新-->
+        <span><a th:href="@{/user/admin}">返回</a></span>
+        <table class="am-table am-table-bordered  am-table-striped  am-table-centered am-table-hover am-table-compact">
+            <h3 style="margin-bottom: 0px;margin-top: 30px">房屋信息</h3>
+            <tr>
+                <td colspan="12">
+                    <button
+                            type="button"
+                            class="am-btn am-btn-primary"
+                            data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 700, height: 650}">
+                        添加
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>区域</th>
+                <th>房型</th>
+                <th>价格</th>
+                <th>面积</th>
+                <th>标题</th>
+                <th>标签</th>
+                <th>配备</th>
+                <th>地址</th>
+                <th>图片</th>
+                <th>操作</th>
+            </tr>
+            <!-- 遍历结果集list-->
+            <tr th:each="house:${house.list}">
+                <td th:text="${house.hid}"></td>
+                <td th:text="${house.users.name}"></td>
+                <td th:text="${house.district.dis_name}"></td>
+                <td th:text="${house.type.typedesc}"></td>
+                <td th:text="${house.price}"></td>
+                <td th:text="${house.areas}"></td>
+                <td th:text="${house.title}"></td>
+                <td th:text="${house.mark}"></td>
+                <td th:text="${house.equipment}"></td>
+                <td th:text="${house.address}"></td>
+                <td ><img th:src="${house.imgs}" th:width="100px" th:height="80px"/></td>
+                <td>
+                    <a class="am-btn am-btn-success" th:href="@{/house/update(flag=1,hid=${house.hid})}">修改</a>
+                    <a class="am-btn am-btn-danger" th:href="@{/house/delete(hid=${house.hid})}">删除</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!--添加-->
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1" >
+    <div class="am-modal-dialog">
+
+        <div class="am-modal-hd">
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <form th:action="@{/house/addHome}"  class="am-form am-form-horizontal">
+                <fieldset>
+                    <legend >添加房屋</legend>
+
+                    <div class="am-form-group">
+                        <label for="doc-select-1" class="am-u-sm-2 am-form-label">房东:</label>
+                        <div class="am-u-sm-10">
+                            <select id="doc-select-1" th:name="user_id">
+                                <option  th:each="user:${user}"  th:value="${user.uid}" th:text="${user.name}" ></option>
+                            </select>
+                            <span class="am-form-caret"></span>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label   class="am-u-sm-2 am-form-label">区域:</label>
+                        <div class="am-u-sm-3">
+                            <select  data-am-selected="{maxHeight: 100}"  id="doc-select-2"  name="district_id">
+                                <option  th:each="dis:${dis}"  th:value="${dis.did}" th:text="${dis.dis_name}" ></option>
+                            </select >
+                            <span class="am-form-caret"></span>
+                        </div>
+                        <label for="doc-select-3" class="am-u-sm-2 am-form-label">街道:</label>
+                        <div class="am-u-sm-5">
+                            <select id="doc-select-3" data-am-selected="{maxHeight: 100}"  th:name="district_id">
+                                <option  th:text="街道" th:value="13"></option>
+                            </select>
+                            <span class="am-form-caret"></span>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-2 am-form-label">房型:</label>
+                        <div class="am-u-sm-10">
+                            <select    name="type_id">
+                                <option  th:each="type:${type}"  th:value="${type.typeid}" th:text="${type.typedesc}" ></option>
+                            </select >
+                            <span class="am-form-caret"></span>
+                        </div>
+
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-2 am-form-label">价格:</label>
+                        <div class="am-u-sm-10">
+                            <input type="number" class="am-form-field"  name="price"  />
+                        </div>
+
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-2 am-form-label">面积:</label>
+                        <div class="am-u-sm-10">
+                            <input type="number" class="am-form-field"  name="areas"  />
+                        </div>
+
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-2 am-form-label">标题:</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" class="am-form-field"  name="title"  />
+                        </div>
+
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-2 am-form-label">标签:</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" class="am-form-field"  name="mark"  />
+                        </div>
+
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-2 am-form-label">配备:</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" class="am-form-field"  name="equipment"  />
+                        </div>
+
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-2 am-form-label">地址:</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" class="am-form-field"  name="address"  />
+                        </div>
+
+                    </div>
+                    <!--<div class="am-form-group am-form-file">-->
+                        <!--<label class="am-u-sm-2 am-form-label">图片:</label>-->
+                        <!--<button type="button" class="am-btn am-btn-danger am-btn-sm">-->
+                            <!--<i class="am-icon-upload"></i> 选择要上传的图片</button>-->
+                        <!--<div class="am-u-sm-10">-->
+                            <!--<input id="doc-form-file1" type="file" name="imgs" multiple>-->
+                        <!--</div>-->
+
+                    <!--</div>-->
+                    <!--<div id="file-list1"></div>-->
+                    <div class="am-form-group">
+                        <div class="am-u-sm-10 am-u-sm-offset-2">
+                            <button type="submit" class="am-btn am-btn-success">提交房源信息</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<!--分页-->
+<div class="am-container">
+    <ul class="am-pagination am-pagination-centered">
+
+    </ul>
+</div>
+<input type="hidden" id="pages" th:value="${house.pages}">
+<input type="hidden" id="pageNum" th:value="${house.pageNum}">
+<script>
+    var pages=$("#pages").val();
+    var pageNum=$("#pageNum").val();
+    var pagination =new Pagination({
+        wrap:$('.am-pagination'),
+        count: parseInt(pages),
+        current: parseInt(pageNum),
+        prevText: '上一页' ,
+        nextText: '下一页',
+        callback: function(current){
+            console.log(current)
+            location.href="/house/selectHome?pageNo="+current;
+        }
+    });
+    $(function() {
+        $('#doc-form-file').on('change', function() {
+            var fileNames = '';
+            $.each(this.files, function() {
+                fileNames += '<span class="am-badge">' + this.name + '</span> ';
+            });
+            $('#file-list').html(fileNames);
+        });
+    });
+     /*城区二级联动*/
+    $("#doc-select-2").change(function () {
+         var id=$(this).val();
+         console.log("城区的id="+id);
+        //发送异步请求，查询对应的街道信息
+         $.get("/house/selectone",{"did":id},function(streets){
+
+             $("#doc-select-3").html("");//先清空，再填充
+             $.each(streets,function (index,street) {
+                  console.log("street="+street.did)
+                 console.log("street="+street.dis_name)
+                 var option='<option value="'+street.did+'">'+street.dis_name+'</option>';
+                  console.log("option="+option);
+                 $("#doc-select-3").append(option);
+             })
+         })
+    })
+</script>
+
+</body>
+</html>

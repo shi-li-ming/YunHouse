@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql:///yunhome?seUnicode=true;characterEncoding=UTF-8
+    username: root
+    password: 1234
+  thymeleaf:
+    cache: false
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+
+#mybatis
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: mapper/*.xml  #扫描mapper.xml映射文件
+  ype-aliases-package: com.whpu.pojo  #pojo类别名扫描

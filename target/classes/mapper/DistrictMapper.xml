@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whpu.mapper.DistrictMapper">
+
+<resultMap id="resultMap" type="com.whpu.pojo.District">
+  <id column="did" property="did"/>
+    <result column="parentid" property="parentid"/>
+    <result column="dis_name" property="dis_name"/>
+</resultMap>
+    <select id="selectAllDistrict" resultMap="resultMap">
+   select * from h_district
+    </select>
+    <!--单查询-->
+    <select id="selectOneDistrict" parameterType="Integer" resultMap="resultMap">
+       SELECT * FROM h_district WHERE parentid=#{did}
+    </select>
+</mapper>

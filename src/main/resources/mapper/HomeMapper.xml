@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whpu.mapper.HomeMapper">
+  <resultMap id="resultMap" type="com.whpu.pojo.House">
+    <id column="hid" property="hid"/>
+      <result column="price" property="price"/>
+      <result column="areas" property="areas"/>
+      <result column="title" property="title"/>
+      <result column="mark" property="mark"/>
+      <result column="user_id" property="user_id"/>
+      <result column="district_id" property="district_id"/>
+      <result column="type_id" property="type_id"/>
+      <result column="equipment" property="equipment"/>
+      <result column="address" property="address"/>
+      <result column="imgs" property="imgs"/>
+       <!--用户-->
+      <association  property="users"  column="user_id" javaType="com.whpu.pojo.Users">
+          <result  property="name" column="name"/>
+          <result property="head_img" column="head_img"/>
+      </association>
+      <!--区域类别-->
+      <association property="district" column="district_id" javaType="com.whpu.pojo.District">
+          <id column="did" property="did"/>
+          <result column="parentid" property="parentid"/>
+          <result column="dis_name" property="dis_name"/>
+      </association>
+      <!--类型-->
+      <association property="type" column="type_id" javaType="com.whpu.pojo.Type">
+          <id column="typeid" property="typeid"/>
+          <result column="typedesc" property="typedesc"/>
+      </association>
+  </resultMap>
+    <!--查询房屋信息-->
+<select id="selectAllHome" resultMap="resultMap">
+SELECT h_house.hid,users.name,users.head_img,h_district.dis_name,h_type.typedesc,h_house.price,h_house.areas,
+  h_house.title,h_house.mark,h_house.equipment,h_house.address,h_house.imgs  FROM h_house,h_district,h_type ,users WHERE
+   h_house.user_id=users.uid AND h_house.district_id=h_district.did AND h_house.type_id=h_type.typeid
+    <!--条件查询-->
+   <!-- <trim prefix="where" prefixOverrides="and">
+        <if test="district_id!=null">
+            h_district.parentid=#{district_id}
+        </if>
+        <if test="type_id!=null">
+          and  h_type.type_id=#{type_id}
+        </if>
+        <if test="price!=0">
+            and  h_house.price =#{price}
+        </if>
+    </trim>-->
+</select>
+    <!--添加-->
+    <insert id="AddHouse" parameterType="com.whpu.pojo.House">
+    insert into h_house values(null,#{user_id},#{district_id},#{type_id},#{price},#{areas},#{title},#{mark},#{equipment},#{address},#{imgs})
+    </insert>
+    <!--查询一个-->
+    <select id="selectonehouse" parameterType="Integer" resultMap="resultMap">
+  SELECT h_house.hid,users.name,h_district.dis_name,h_type.typedesc,h_house.price,h_house.areas,
+  h_house.title,h_house.mark,h_house.equipment,h_house.address,h_house.imgs  FROM h_house,h_district,h_type ,users WHERE
+   h_house.user_id=users.uid AND h_house.district_id=h_district.did AND h_house.type_id=h_type.typeid  and h_house.hid=#{hid}
+
+    </select>
+    <!--修改-->
+    <update id="updatehouse" parameterType="com.whpu.pojo.House" >
+      update  h_house set user_id=#{user_id},district_id=#{district_id},type_id=#{type_id},price=#{price},areas=#{areas},title=#{title},
+      mark=#{mark},equipment=#{equipment},address=#{address} where h_house.hid=#{hid}
+    </update>
+<!--    删除-->
+    <delete id="deletehouse" parameterType="Integer">
+        delete from h_house where hid=#{hid}
+    </delete>
+
+
+
+</mapper>

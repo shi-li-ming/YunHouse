@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/amazeui/assets/css/amazeui.css}">
+    <script th:src="@{/amazeui/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/amazeui/assets/js/amazeui.js}"></script>
+    <script th:src="@{/amazeui/pagination/amazeui-pagination.js}"></script>
+</head>
+<body>
+            <form th:action="@{/user/update}" class="am-form am-form-horizontal" style="text-align: center">
+                <fieldset>
+                    <legend>修改用户</legend>
+                    <!--<input type="hidden" name="uid" th:value="${user.uid}">-->
+
+                    <input type="hidden"   name="uid"  th:value="${users.uid}"/>
+                    <input type="hidden"   name="flag"  th:value="0"/>
+                    <div class="am-form-group ">
+                        <label for="doc-vld-name-2" class="am-u-sm-2 am-form-label am-u-sm-offset-2">用户名:</label>
+                        <div class="am-u-sm-6">
+                            <input type="text"  id="doc-vld-name-2" name="name"  th:value="${users.name}"  minlength="1" placeholder="输入用户名" class="am-form-field" required/>
+                        </div>
+                        <span class="am-form-caret"></span>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="doc-vld-pwd-2" class="am-u-sm-2 am-form-label am-u-sm-offset-2">密码:</label>
+                        <div class="am-u-sm-6">
+                            <input type="text"  id="doc-vld-pwd-2" name="pwd" th:value="${users.pwd}" minlength="1" placeholder="输入密码" required/>
+                        </div>
+                        <span class="am-form-caret"></span>
+                    </div>
+                    <div class="am-form-group am-g">
+                        <label   class="am-u-sm-2 am-u-sm-offset-2 am-form-label">性别:</label>
+                        <div class="am-u-sm-6 ">
+                            <input type="hidden" id="selectsex" th:value="${users.sex}">
+                            <select   name="sex"   id="selectx">
+                                <option >请选择</option>
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                        <span class="am-form-caret"></span>
+                    </div>
+
+                    <div class="am-form-group ">
+                        <label for="doc-vld-name-2" class="am-u-sm-2 am-form-label am-u-sm-offset-2">出生日期:</label>
+                        <div class="am-u-sm-6">
+                            <input type="date" class="am-form-field"  name="birth" th:value="${users.birth}" placeholder="日历组件" data-am-datepicker required />
+                        </div>
+                        <span class="am-form-caret"></span>
+                    </div>
+
+                    <div class="am-form-group am-g">
+                        <label   class="am-u-sm-2 am-u-sm-offset-2 am-form-label">房东:</label>
+                        <div class="am-u-sm-6 ">
+                            <input type="hidden" id="selectrole" th:value="${users.role}">
+                            <select   name="role" id="selects">
+                                <option >请选择</option>
+                                <option value="房东">房东</option>
+                                <option value="租客">租客</option>
+                            </select>
+                        </div>
+                        <span class="am-form-caret"></span>
+                    </div>
+
+                    <div class="am-form-group">
+                    <div  class="am-u-sm-10 am-u-sm-offset-2">
+                        <input type="submit" class="am-btn am-btn-success" value="提交">
+                    </div>
+                    </div>
+                </fieldset>
+            </form>
+
+
+</body>
+<script>
+    $(document).ready(function(){
+        var key=$("#selectrole").val();
+        //根据值让option选中
+        $("#selects option[value='"+key+"']").attr("selected","selected");
+    })
+
+    $(document).ready(function(){
+        var key=$("#selectsex").val();
+        $("#selectx option[value='"+key+"']").attr("selected","selected");
+    })
+</script>
+</html>

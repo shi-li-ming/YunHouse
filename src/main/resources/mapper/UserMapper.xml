@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whpu.mapper.UserMapper">
+    <resultMap id="resultMap" type="com.whpu.pojo.Users">
+          <id  property="uid" column="uid"/>
+        <result  property="name" column="name"/>
+        <result  property="pwd" column="pwd"/>
+        <result  property="sex" column="sex"/>
+        <result  property="birth" column="birth"/>
+        <result  property="head_img" column="head_img"/>
+        <result  property="role" column="role"/>
+    </resultMap>
+ <!--查询所有用户-->
+  <select id="selectAllUser"  resultMap="resultMap">
+    select * from users
+  </select>
+    <!--添加用户-->
+    <insert id="AddUser" parameterType="com.whpu.pojo.Users">
+    insert into users values(null,#{name},#{pwd},#{sex},#{birth},#{head_img},#{role})
+    </insert>
+    <!--单查询-->
+    <select id="selectOneUser" parameterType="Integer" resultMap="resultMap">
+        select * from users where uid=#{uid}
+    </select>
+    <!--修改-->
+    <update id="updateUser" parameterType="com.whpu.pojo.Users">
+        update users set name=#{name},pwd=#{pwd},sex=#{sex},birth=#{birth},role=#{role} where uid=#{uid}
+    </update>
+
+    <!--删除-->
+    <delete id="deleteUser"  parameterType="Integer">
+        delete from users where uid=#{uid}
+    </delete>
+</mapper>
