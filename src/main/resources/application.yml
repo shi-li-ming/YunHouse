@@ -1,3 +1,4 @@
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -16,3 +17,5 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: mapper/*.xml  #扫描mapper.xml映射文件
   ype-aliases-package: com.whpu.pojo  #pojo类别名扫描
+server:
+  port: 8001
